@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Cards from "../Utilities/Cards";
 import PointCalculatorContext from "../Contexts/PointCalculatorContext";
 import CardsContext from '../Contexts/CardsContext';
+import CurrentTurnContext from "../Contexts/CurrentTurnContext";
 
 export default () => {
   const [cards, setCards] = useState(Cards);
@@ -21,6 +22,10 @@ export default () => {
     setCardsUsed
   } = useContext(CardsContext)
 
+  const {
+    setCurrentTurn
+  } = useContext(CurrentTurnContext)
+
   useEffect(() => {
     setShuffledCards(cards.sort(() => 0.5 - Math.random()));
   }, []);
@@ -30,6 +35,7 @@ export default () => {
       setDealerCards([shuffledCards[0], shuffledCards[1]]);
       setPlayerCards([shuffledCards[2], shuffledCards[3]]);
       setCardsUsed(4)
+      setCurrentTurn("player")
     }
   }, [shuffledCards]);
 

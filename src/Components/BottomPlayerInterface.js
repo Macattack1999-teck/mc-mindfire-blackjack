@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PointCalculatorContext from "../Contexts/PointCalculatorContext";
 import CardsContext from "../Contexts/CardsContext";
+import CurrentTurnContext from "../Contexts/CurrentTurnContext";
 
 export default () => {
   const { dealerPoints, playerPoints } = useContext(PointCalculatorContext);
@@ -14,7 +15,10 @@ export default () => {
     setDealerCards
   } = useContext(CardsContext);
 
-  console.log(playerCards);
+  const {
+    currentTurn,
+    setCurrentTurn
+  } = useContext(CurrentTurnContext)
 
   const handleHitting = () => {
     const indexOfCardToAdd =
@@ -23,6 +27,7 @@ export default () => {
     const cardToAdd = shuffledCards[indexOfCardToAdd];
     currentCards.push(cardToAdd);
     setPlayerCards(currentCards);
+    setCurrentTurn("dealer")
   };
 
   const handleHolding = () => {
@@ -51,27 +56,35 @@ export default () => {
         <div style={{ paddingTop: "5px" }}>Current points: {dealerPoints}</div>
       </div>
 
-      <div>
-        <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
-          Options
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "5px"
-          }}
-        >
-          <div style={{ width: "40px" }} onClick={handleHitting}>
-            Hit
+      {
+        currentTurn === null ? (
+          <div>
+            Initializing
           </div>
+        ) : currentTurn === "player" ? (
+          <div>
+            <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
+              Options
+            </div>
 
-          <div style={{ width: "40px" }} onClick={handleHolding}>
-            Hold
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: "5px"
+              }}
+            >
+              <div style={{ width: "40px" }} onClick={handleHitting}>
+                Hit
+              </div>
+
+              <div style={{ width: "40px" }} onClick={handleHolding}>
+                Hold
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        ) : null
+      }
 
       <div>
         <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>

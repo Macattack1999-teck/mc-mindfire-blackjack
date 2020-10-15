@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CurrentTurnContext from '../Contexts/CurrentTurnContext'
 
 export default (props) => {
-  const [ currentTurn, setCurrentTurn ] = useState("Turn")
+  const [ currentTurn, setCurrentTurn ] = useState(null)
 
   const state = {
     currentTurn,
