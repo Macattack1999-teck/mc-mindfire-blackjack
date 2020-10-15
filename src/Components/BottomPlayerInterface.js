@@ -15,10 +15,7 @@ export default () => {
     setDealerCards
   } = useContext(CardsContext);
 
-  const {
-    currentTurn,
-    setCurrentTurn
-  } = useContext(CurrentTurnContext)
+  const { currentTurn, setCurrentTurn } = useContext(CurrentTurnContext);
 
   const handleHitting = () => {
     const indexOfCardToAdd =
@@ -30,7 +27,7 @@ export default () => {
   };
 
   const handleHolding = () => {
-    setCurrentTurn("dealer")
+    setCurrentTurn("dealer");
   };
 
   return (
@@ -51,47 +48,41 @@ export default () => {
         </div>
 
         <div style={{ paddingTop: "5px" }}>
-          {
-            currentTurn === null ? (
-              "Initializing"
-            ) : currentTurn === "dealer" ? (
-              "Playing"
-            ) : "Waiting..."
-          }
+          {currentTurn === null
+            ? "Initializing"
+            : currentTurn === "dealer"
+            ? "Playing"
+            : "Waiting..."}
         </div>
 
         <div style={{ paddingTop: "5px" }}>Current points: {dealerPoints}</div>
       </div>
 
-      {
-        currentTurn === null ? (
-          <div>
-            Initializing
+      {currentTurn === null ? (
+        <div>Initializing</div>
+      ) : currentTurn === "player" ? (
+        <div>
+          <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
+            Options
           </div>
-        ) : currentTurn === "player" ? (
-          <div>
-            <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
-              Options
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "5px"
+            }}
+          >
+            <div style={{ width: "40px" }} onClick={handleHitting}>
+              Hit
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "5px"
-              }}
-            >
-              <div style={{ width: "40px" }} onClick={handleHitting}>
-                Hit
-              </div>
-
-              <div style={{ width: "40px" }} onClick={handleHolding}>
-                Hold
-              </div>
+            <div style={{ width: "40px" }} onClick={handleHolding}>
+              Hold
             </div>
           </div>
-        ) : null
-      }
+        </div>
+      ) : null}
 
       <div>
         <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
@@ -99,13 +90,11 @@ export default () => {
         </div>
 
         <div style={{ paddingTop: "5px" }}>
-          {
-            currentTurn === null ? (
-              "Initializing"
-            ) : currentTurn === "player" ? (
-              "Playing"
-            ) : "Waiting..."
-          }
+          {currentTurn === null
+            ? "Initializing"
+            : currentTurn === "player"
+            ? "Playing"
+            : "Waiting..."}
         </div>
 
         <div style={{ paddingTop: "5px" }}>Current points: {playerPoints}</div>

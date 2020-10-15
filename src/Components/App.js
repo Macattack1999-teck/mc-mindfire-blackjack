@@ -4,6 +4,7 @@ import BottomPlayerIndicator from './BottomPlayerInterface';
 import PointCalculatorProvider from '../Providers/PointCalculatorProvider';
 import CardsProvider from '../Providers/CardsProvider';
 import CurrentTurnProvider from '../Providers/CurrentTurnProvider';
+import EndGameProvider from '../Providers/EndGameProvider'
 
 function App() {
   return (

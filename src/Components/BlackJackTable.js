@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import Cards from "../Utilities/Cards";
 import PointCalculatorContext from "../Contexts/PointCalculatorContext";
-import CardsContext from '../Contexts/CardsContext';
+import CardsContext from "../Contexts/CardsContext";
 import CurrentTurnContext from "../Contexts/CurrentTurnContext";
+import EndGameContext from "../Contexts/EndGameContext";
 
 export default () => {
-  const [ cards, setCards ] = useState(Cards);
-  const [ dealerSecondCardShown, setDealerSecondCardShown ] = useState(false);
-  const [ dealerHasHighAces, setDealerHasHighAces ] = useState(false)
+  const [cards, setCards] = useState(Cards);
+  const [dealerSecondCardShown, setDealerSecondCardShown] = useState(false);
+  const [dealerHasHighAces, setDealerHasHighAces] = useState(false);
   const {
     dealerPoints,
     setDealerPoints,
     playerPoints,
     setPlayerPoints
-  } = useContext(PointCalculatorContext)
+  } = useContext(PointCalculatorContext);
 
   const {
     shuffledCards,
@@ -24,66 +25,76 @@ export default () => {
     setPlayerCards,
     cardsUsed,
     setCardsUsed
-  } = useContext(CardsContext)
+  } = useContext(CardsContext);
+
+  const { currentTurn, setCurrentTurn } = useContext(CurrentTurnContext);
 
   const {
-    currentTurn,
-    setCurrentTurn
-  } = useContext(CurrentTurnContext)
-  
+    wins,
+    setWins,
+    loses,
+    setLoses,
+    setEndGame
+  } = useContext(EndGameContext)
+
   useEffect(() => {
     setShuffledCards(cards.sort(() => 0.5 - Math.random()));
   }, []);
-  
+
   useEffect(() => {
     if (shuffledCards.length > 0) {
       setDealerCards([shuffledCards[0], shuffledCards[1]]);
       setPlayerCards([shuffledCards[2], shuffledCards[3]]);
-      setCardsUsed(4)
-      setCurrentTurn("player")
+      setCardsUsed(4);
+      setCurrentTurn("player");
     }
   }, [shuffledCards]);
-  
+
   useEffect(() => {
     if (dealerCards.length > 0 && playerCards.length > 0) {
-      const calculatedDealerPoints = dealerCards.reduce((accum, currentVal, currentIndex) => {
-        
-        if (!dealerSecondCardShown && currentIndex === 1) {
-          return accum += 0
-        }
-        
-        if (dealerPoints > 10 && currentVal.value === 11) {
-          if (!dealerHasHighAces) {
-            setDealerHasHighAces(true)
+      const calculatedDealerPoints = dealerCards.reduce(
+        (accum, currentVal, currentIndex) => {
+          if (!dealerSecondCardShown && currentIndex === 1) {
+            return (accum += 0);
           }
 
-          return accum += 1
-        }
-        
-        return accum += currentVal.value
-      }, 0)
-      
-      const playerPoints = playerCards.reduce((accum, currentVal, currentIndex) => {
-        return accum += currentVal.value
-      }, 0)
-      
-      setDealerPoints(calculatedDealerPoints)
-      setPlayerPoints(playerPoints)
+          if (dealerPoints > 10 && currentVal.value === 11) {
+            if (!dealerHasHighAces) {
+              setDealerHasHighAces(true);
+            }
+
+            return (accum += 1);
+          }
+
+          return (accum += currentVal.value);
+        },
+        0
+      );
+
+      const playerPoints = playerCards.reduce(
+        (accum, currentVal, currentIndex) => {
+          return (accum += currentVal.value);
+        },
+        0
+      );
+
+      setDealerPoints(calculatedDealerPoints);
+      setPlayerPoints(playerPoints);
     }
-  }, [ dealerCards, playerCards, dealerSecondCardShown ])
-  
+  }, [dealerCards, playerCards, dealerSecondCardShown]);
+
   useEffect(() => {
     if (currentTurn !== null && currentTurn === "dealer") {
       if (!dealerSecondCardShown) {
-        setDealerSecondCardShown(true)
+        setDealerSecondCardShown(true);
       }
     }
-  }, [currentTurn])
+  }, [currentTurn]);
 
   useEffect(() => {
     if (dealerSecondCardShown) {
       const indexOfCardToAdd =
-      shuffledCards.length - (shuffledCards.length - cardsUsed);
+        shuffledCards.length - (shuffledCards.length - cardsUsed);
       const currentCards = [...dealerCards];
       const cardToAdd = shuffledCards[indexOfCardToAdd];
       currentCards.push(cardToAdd);
@@ -98,10 +109,19 @@ export default () => {
         setDealerCards(currentCards);
         //hit
       } else {
+        if (dealerPoints > 21) {
+          setWins(wins + 1)
+        } else if (playerPoints > 21) {
+          setLoses(loses + 1)
+        } else if (dealerPoints > playerPoints) {
+          setLoses(loses + 1)
+        } else if (playerPoints > dealerPoints) {
+          setWins(wins + 1)
+        }
         // end game
       }
     }
-  }, [dealerPoints])
+  }, [dealerPoints]);
 
   return (
     <div style={{ backgroundColor: "#1D2020", height: "80%" }}>
