@@ -23,13 +23,14 @@ export default () => {
   } = useContext(CardsContext)
 
   const {
+    currentTurn,
     setCurrentTurn
   } = useContext(CurrentTurnContext)
-
+  
   useEffect(() => {
     setShuffledCards(cards.sort(() => 0.5 - Math.random()));
   }, []);
-
+  
   useEffect(() => {
     if (shuffledCards.length > 0) {
       setDealerCards([shuffledCards[0], shuffledCards[1]]);
@@ -38,25 +39,33 @@ export default () => {
       setCurrentTurn("player")
     }
   }, [shuffledCards]);
-
+  
   useEffect(() => {
     if (dealerCards.length > 0 && playerCards.length > 0) {
       const dealerPoints = dealerCards.reduce((accum, currentVal, currentIndex) => {
         if (!dealerSecondCardShown && currentIndex === 1) {
           return accum += 0
         }
-
+        
         return accum += currentVal.value
       }, 0)
-
+      
       const playerPoints = playerCards.reduce((accum, currentVal, currentIndex) => {
         return accum += currentVal.value
       }, 0)
-
+      
       setDealerPoints(dealerPoints)
       setPlayerPoints(playerPoints)
     }
-  }, [ dealerCards, playerCards ])
+  }, [ dealerCards, playerCards, dealerSecondCardShown ])
+  
+  useEffect(() => {
+    if (currentTurn !== null && currentTurn === "dealer") {
+      if (!dealerSecondCardShown) {
+        setDealerSecondCardShown(true)
+      }
+    }
+  }, [currentTurn])
 
   return (
     <div style={{ backgroundColor: "#1D2020", height: "80%" }}>

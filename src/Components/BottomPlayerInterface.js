@@ -27,7 +27,6 @@ export default () => {
     const cardToAdd = shuffledCards[indexOfCardToAdd];
     currentCards.push(cardToAdd);
     setPlayerCards(currentCards);
-    setCurrentTurn("dealer")
   };
 
   const handleHolding = () => {
