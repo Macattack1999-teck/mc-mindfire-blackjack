@@ -8,14 +8,16 @@ import CurrentTurnProvider from '../Providers/CurrentTurnProvider';
 function App() {
   return (
     <div className="App" style={{ height: "100vh" }}>
-      <CurrentTurnProvider>
-        <CardsProvider>
-          <PointCalculatorProvider>
-            <BlackJackTable />
-            <BottomPlayerIndicator />
-          </PointCalculatorProvider>
-        </CardsProvider>
-      </CurrentTurnProvider>
+      <EndGameProvider>
+        <CurrentTurnProvider>
+          <CardsProvider>
+            <PointCalculatorProvider>
+              <BlackJackTable />
+              <BottomPlayerIndicator />
+            </PointCalculatorProvider>
+          </CardsProvider>
+        </CurrentTurnProvider>
+      </EndGameProvider>
     </div>
   );
 }
