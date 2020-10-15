@@ -1,5 +1,3 @@
-import Image from '../Images/blackjack-cards/'
-
 const cards = [
   {
     card: "ace",
