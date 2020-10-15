@@ -12,16 +12,17 @@ export default () => {
     setPlayerCards,
     dealerCards,
     setDealerCards
-  } = useContext(CardsContext)
+  } = useContext(CardsContext);
 
-  console.log(playerCards)
+  console.log(playerCards);
 
   const handleHitting = () => {
-    const indexOfCardToAdd = (shuffledCards.length - (shuffledCards.length - cardsUsed))
-    const currentCards = [...playerCards]
-    const cardToAdd = shuffledCards[indexOfCardToAdd]
-    currentCards.push(cardToAdd)
-    setPlayerCards(currentCards)
+    const indexOfCardToAdd =
+      shuffledCards.length - (shuffledCards.length - cardsUsed);
+    const currentCards = [...playerCards];
+    const cardToAdd = shuffledCards[indexOfCardToAdd];
+    currentCards.push(cardToAdd);
+    setPlayerCards(currentCards);
   };
 
   const handleHolding = () => {
