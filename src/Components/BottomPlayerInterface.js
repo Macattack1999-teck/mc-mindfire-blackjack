@@ -31,7 +31,7 @@ export default () => {
   };
 
   const handleHolding = () => {
-    console.log("holding");
+    setCurrentTurn("dealer")
   };
 
   return (
@@ -51,7 +51,15 @@ export default () => {
           Dealer
         </div>
 
-        <div style={{ paddingTop: "5px" }}>Waiting...</div>
+        <div style={{ paddingTop: "5px" }}>
+          {
+            currentTurn === null ? (
+              "Initializing"
+            ) : currentTurn === "dealer" ? (
+              "Playing"
+            ) : "Waiting..."
+          }
+        </div>
 
         <div style={{ paddingTop: "5px" }}>Current points: {dealerPoints}</div>
       </div>
@@ -91,7 +99,15 @@ export default () => {
           Player
         </div>
 
-        <div style={{ paddingTop: "5px" }}>Playing</div>
+        <div style={{ paddingTop: "5px" }}>
+          {
+            currentTurn === null ? (
+              "Initializing"
+            ) : currentTurn === "player" ? (
+              "Playing"
+            ) : "Waiting..."
+          }
+        </div>
 
         <div style={{ paddingTop: "5px" }}>Current points: {playerPoints}</div>
       </div>
