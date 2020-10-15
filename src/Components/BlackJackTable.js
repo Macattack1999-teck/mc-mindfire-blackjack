@@ -5,10 +5,13 @@ import CardsContext from '../Contexts/CardsContext';
 import CurrentTurnContext from "../Contexts/CurrentTurnContext";
 
 export default () => {
-  const [cards, setCards] = useState(Cards);
-  const [dealerSecondCardShown, setDealerSecondCardShown] = useState(false);
+  const [ cards, setCards ] = useState(Cards);
+  const [ dealerSecondCardShown, setDealerSecondCardShown ] = useState(false);
+  const [ dealerHasHighAces, setDealerHasHighAces ] = useState(false)
   const {
+    dealerPoints,
     setDealerPoints,
+    playerPoints,
     setPlayerPoints
   } = useContext(PointCalculatorContext)
 
@@ -19,6 +22,7 @@ export default () => {
     setDealerCards,
     playerCards,
     setPlayerCards,
+    cardsUsed,
     setCardsUsed
   } = useContext(CardsContext)
 
@@ -42,9 +46,18 @@ export default () => {
   
   useEffect(() => {
     if (dealerCards.length > 0 && playerCards.length > 0) {
-      const dealerPoints = dealerCards.reduce((accum, currentVal, currentIndex) => {
+      const calculatedDealerPoints = dealerCards.reduce((accum, currentVal, currentIndex) => {
+        
         if (!dealerSecondCardShown && currentIndex === 1) {
           return accum += 0
+        }
+        
+        if (dealerPoints > 10 && currentVal.value === 11) {
+          if (!dealerHasHighAces) {
+            setDealerHasHighAces(true)
+          }
+
+          return accum += 1
         }
         
         return accum += currentVal.value
@@ -54,7 +67,7 @@ export default () => {
         return accum += currentVal.value
       }, 0)
       
-      setDealerPoints(dealerPoints)
+      setDealerPoints(calculatedDealerPoints)
       setPlayerPoints(playerPoints)
     }
   }, [ dealerCards, playerCards, dealerSecondCardShown ])
@@ -66,6 +79,29 @@ export default () => {
       }
     }
   }, [currentTurn])
+
+  useEffect(() => {
+    if (dealerSecondCardShown) {
+      const indexOfCardToAdd =
+      shuffledCards.length - (shuffledCards.length - cardsUsed);
+      const currentCards = [...dealerCards];
+      const cardToAdd = shuffledCards[indexOfCardToAdd];
+      currentCards.push(cardToAdd);
+
+      if (dealerPoints < 17) {
+        //hit
+        setDealerCards(currentCards);
+      } else if (dealerHasHighAces && dealerPoints < 18) {
+        //hit
+        setDealerCards(currentCards);
+      } else if (dealerPoints < playerPoints) {
+        setDealerCards(currentCards);
+        //hit
+      } else {
+        // end game
+      }
+    }
+  }, [dealerPoints])
 
   return (
     <div style={{ backgroundColor: "#1D2020", height: "80%" }}>
