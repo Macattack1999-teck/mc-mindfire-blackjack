@@ -7,6 +7,7 @@ export default () => {
   const [ shuffledCards, setShuffledCards ] = useState([])
   const [ playerCards, setPlayerCards ] = useState([]);
   const [ dealerCards, setDealerCards ] = useState([]);
+  const [ dealerSecondCardShown, setDealerSecondCardShown ] = useState(false)
 
   useEffect(() => {
     setShuffledCards(cards.sort(() => .5 - Math.random()))
@@ -25,20 +26,47 @@ export default () => {
     <div style={{ backgroundColor: "#1D2020", height: "80%" }}>
       <div style={{ backgroundColor: "#744A35", height: "100%", borderBottomLeftRadius: "50%", borderBottomRightRadius: "50%", borderBottom: "30px solid #744A35" }}>
         <div style={{ backgroundColor: "#008000", height: "90%", borderBottomLeftRadius: "50%", borderBottomRightRadius: "50%" }}>
-          <div>
+          <div style={{ height: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
             {
               dealerCards.length > 0 ? (
-                dealerCards.map((card) => {
+                dealerCards.map((card, idx) => {
                   return (
-                    <div>
-                      <img
-                        style={{ width: "75px", height: "100px" }}
-                        src={require("../Images/blackjackCards/".concat(card.image))}
-                      />
+                    <div
+                      style={{ width: "75px", height: "100px", position: "relative", margin: "0 10px" }}
+                    >
+                      <div style={{ width: "100%", height: "100%", backgroundColor: "#933d41", borderRadius: "10px", fontSize: "14px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "absolute" }}>
+                        <div>
+                          Mindfire
+                        </div>
+
+                        <div>
+                          Blackjack
+                        </div>
+                      </div>
+
+                      {
+                        idx === 1 && !dealerSecondCardShown ? (
+                          <div style={{ position: "absolute", zIndex: "-1" }}>
+                            <img
+                              style={{ width: "100%", height: "100%" }}
+                              src={require("../Images/blackjackCards/".concat(card.image))}
+                            />
+                          </div>
+                        ) : (
+                          <div style={{ position: "absolute" }}>
+                            <img
+                              style={{ width: "100%", height: "100%" }}
+                              src={require("../Images/blackjackCards/".concat(card.image))}
+                            />
+                          </div>
+                        )
+                      }
+
+                      
                     </div>
                   )
                 })
-              ) : "Loading..."
+              ) : "Shuffling..."
             }
           </div>
 
