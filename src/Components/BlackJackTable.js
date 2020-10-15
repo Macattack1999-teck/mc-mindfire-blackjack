@@ -1,17 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
 import Cards from "../Utilities/Cards";
 import PointCalculatorContext from "../Contexts/PointCalculatorContext";
+import CardsContext from '../Contexts/CardsContext';
 
 export default () => {
   const [cards, setCards] = useState(Cards);
-  const [shuffledCards, setShuffledCards] = useState([]);
-  const [playerCards, setPlayerCards] = useState([]);
-  const [dealerCards, setDealerCards] = useState([]);
   const [dealerSecondCardShown, setDealerSecondCardShown] = useState(false);
   const {
     setDealerPoints,
     setPlayerPoints
   } = useContext(PointCalculatorContext)
+
+  const {
+    shuffledCards,
+    setShuffledCards,
+    dealerCards,
+    setDealerCards,
+    playerCards,
+    setPlayerCards
+  } = useContext(CardsContext)
 
   useEffect(() => {
     setShuffledCards(cards.sort(() => 0.5 - Math.random()));

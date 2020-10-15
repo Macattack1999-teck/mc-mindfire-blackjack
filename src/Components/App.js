@@ -1,6 +1,6 @@
 import React from 'react';
 import BlackJackTable from './BlackJackTable';
-import BottomPlayerIndicator from './BottomPlayerIndicator';
+import BottomPlayerIndicator from './BottomPlayerInterface';
 import PointCalculatorProvider from '../Providers/PointCalculatorProvider';
 import CardsProvider from '../Providers/CardsProvider';
 
