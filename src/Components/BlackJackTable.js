@@ -32,7 +32,7 @@ export default () => {
                 dealerCards.map((card, idx) => {
                   return (
                     <div
-                      style={{ width: "75px", height: "100px", position: "relative", margin: "0 10px" }}
+                      style={{ width: "75px", height: "100px", position: "relative", margin: "0 -10px", borderRadius: "10px" }}
                     >
                       <div style={{ width: "100%", height: "100%", backgroundColor: "#933d41", borderRadius: "10px", fontSize: "14px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "absolute" }}>
                         <div>
@@ -62,7 +62,7 @@ export default () => {
                         )
                       }
 
-                      
+                  
                     </div>
                   )
                 })
@@ -70,7 +70,36 @@ export default () => {
             }
           </div>
 
-          <div>Player half</div>
+          <div style={{ height: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {
+             playerCards.length > 0 ? (
+                playerCards.map((card, idx) => {
+                  return (
+                    <div
+                      style={{ width: "75px", height: "100px", position: "relative", margin: "0 -10px" }}
+                    >
+                      <div style={{ width: "100%", height: "100%", backgroundColor: "#933d41", borderRadius: "10px", fontSize: "14px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "absolute" }}>
+                        <div>
+                          Mindfire
+                        </div>
+
+                        <div>
+                          Blackjack
+                        </div>
+                      </div>
+
+                      <div style={{ position: "absolute" }}>
+                        <img
+                          style={{ width: "100%", height: "100%" }}
+                          src={require("../Images/blackjackCards/".concat(card.image))}
+                        />
+                      </div>
+                    </div>
+                  )
+                })
+              ) : "Shuffling..."
+            }
+          </div>
         </div>
       </div>
     </div>
