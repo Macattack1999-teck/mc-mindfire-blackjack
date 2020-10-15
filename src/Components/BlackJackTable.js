@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Image from '../Images/blackjack-cards/'
 import Cards from "../Utilities/Cards";
 
 export default () => {
@@ -19,6 +18,24 @@ export default () => {
       setPlayerCards([shuffledCards[2], shuffledCards[3]]);
     }
   }, [shuffledCards]);
+
+  useEffect(() => {
+    if (dealerCards.length > 0 && playerCards.length > 0) {
+      const dealerPoints = dealerCards.reduce((accum, currentVal, currentIndex) => {
+        if (!dealerSecondCardShown && currentIndex === 1) {
+          return accum += 0
+        }
+
+        return accum += currentVal.value
+      }, 0)
+
+      const playerPoints = playerCards.reduce((accum, currentVal, currentIndex) => {
+        return accum += currentVal.value
+      }, 0)
+
+      console.log(dealerPoints, playerPoints)
+    }
+  }, [ dealerCards, playerCards ])
 
   return (
     <div style={{ backgroundColor: "#1D2020", height: "80%" }}>
