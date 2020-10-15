@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import PointCalculatorContext from '../Contexts/PointCalculatorContext'
 
 export default () => {
+  const {
+    dealerPoints,
+    playerPoints
+  } = useContext(PointCalculatorContext)
+
   return (
-    <div style={{ height: "20%", backgroundColor: "#1D2020", display: "flex", justifyContent: "space-around", alignItems: "center", color: "#fff" }}>
+    <div style={{ height: "20%", backgroundColor: "#1D2020", display: "flex", justifyContent: "space-around", alignItems: "center", color: "#fff", textAlign: "center" }}>
       <div>
         <div style={{ borderBottom: "1px solid #CCC", textAlign: "center" }}>
           Dealer
@@ -10,6 +16,10 @@ export default () => {
 
         <div style={{ paddingTop: "5px" }}>
           Playing
+        </div>
+
+        <div style={{ paddingTop: "5px" }}>
+          Current points: {dealerPoints}
         </div>
       </div>
 
@@ -36,6 +46,10 @@ export default () => {
 
         <div style={{ paddingTop: "5px" }}>
           Waiting
+        </div>
+
+        <div style={{ paddingTop: "5px" }}>
+          Current points: {playerPoints}
         </div>
       </div>
     </div>

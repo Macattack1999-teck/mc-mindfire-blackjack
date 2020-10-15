@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Cards from "../Utilities/Cards";
+import PointCalculatorContext from "../Contexts/PointCalculatorContext";
 
 export default () => {
   const [cards, setCards] = useState(Cards);
@@ -7,6 +8,10 @@ export default () => {
   const [playerCards, setPlayerCards] = useState([]);
   const [dealerCards, setDealerCards] = useState([]);
   const [dealerSecondCardShown, setDealerSecondCardShown] = useState(false);
+  const {
+    setDealerPoints,
+    setPlayerPoints
+  } = useContext(PointCalculatorContext)
 
   useEffect(() => {
     setShuffledCards(cards.sort(() => 0.5 - Math.random()));
@@ -33,7 +38,8 @@ export default () => {
         return accum += currentVal.value
       }, 0)
 
-      console.log(dealerPoints, playerPoints)
+      setDealerPoints(dealerPoints)
+      setPlayerPoints(playerPoints)
     }
   }, [ dealerCards, playerCards ])
 
