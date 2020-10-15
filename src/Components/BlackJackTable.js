@@ -17,7 +17,8 @@ export default () => {
     dealerCards,
     setDealerCards,
     playerCards,
-    setPlayerCards
+    setPlayerCards,
+    setCardsUsed
   } = useContext(CardsContext)
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default () => {
     if (shuffledCards.length > 0) {
       setDealerCards([shuffledCards[0], shuffledCards[1]]);
       setPlayerCards([shuffledCards[2], shuffledCards[3]]);
+      setCardsUsed(4)
     }
   }, [shuffledCards]);
 

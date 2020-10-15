@@ -1,11 +1,27 @@
 import React, { useContext } from "react";
 import PointCalculatorContext from "../Contexts/PointCalculatorContext";
+import CardsContext from "../Contexts/CardsContext";
 
 export default () => {
   const { dealerPoints, playerPoints } = useContext(PointCalculatorContext);
+  const {
+    shuffledCards,
+    cardsUsed,
+    setCardsUsed,
+    playerCards,
+    setPlayerCards,
+    dealerCards,
+    setDealerCards
+  } = useContext(CardsContext)
+
+  console.log(playerCards)
 
   const handleHitting = () => {
-    console.log("hitting");
+    const indexOfCardToAdd = (shuffledCards.length - (shuffledCards.length - cardsUsed))
+    const currentCards = [...playerCards]
+    const cardToAdd = shuffledCards[indexOfCardToAdd]
+    currentCards.push(cardToAdd)
+    setPlayerCards(currentCards)
   };
 
   const handleHolding = () => {
